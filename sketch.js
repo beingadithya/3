@@ -75,7 +75,7 @@ function preload(){
   marineNinja_img = loadImage('images/MARINENINJALOGO.png');
 
   howToPlay_img = loadImage('images/HOWTOPLAYLVL1FINAL.png');
-  instructions_img = loadImage('images/INSTRUCTIONSFORLVL1.png');
+  instructions_img = loadImage('images/Level3Instructions.png');
 
   diver_img = loadAnimation('images/diverImg1.png','images/diverImg2.png','images/DiverImg3.png','images/DiverImg4.png','images/DiverImg5.png','images/DiverImg6.png','images/DiverImg7.png','images/DiverImg8.png')
   staticDiver_img = loadImage('images/DiverImg4.png');
@@ -99,8 +99,8 @@ function preload(){
 
   angelFish_img = loadImage('images/angelfish.png');
 
-  winText_img = loadImage('images/setFinal.png');
-  loseText_img = loadImage('images/RELOAD.png');
+  winText_img = loadImage('images/Level3Win.png');
+  loseText_img = loadImage('images/Level3Lose.png');
 
   tempbg = loadImage('images/IntroBackgroundTemp.jpg');
 
@@ -121,11 +121,7 @@ function setup() {
   
   //createCanvas(1200,310);  
  createCanvas(windowWidth, windowHeight);
-/*
-   bg2 = createSprite(300,150,1200,800);
-   bg2.addImage(bg); 
-   bg2.scale = 0.142;
-    */
+
    octopus = createSprite(280,250);
    octopus.addImage(octopus_img);
    octopus.scale = 0.5;
@@ -180,9 +176,9 @@ function setup() {
   howToPlay.scale = 0.5;
   howToPlay.visible = false;
 
-  instructions = createSprite(1400,350);
+  instructions = createSprite(1400,385);
   instructions.addImage(instructions_img);
-  instructions.scale = 0.5;
+  instructions.scale = 1.25;
   instructions.visible = false;
 
   playButton = createSprite(700,350);
@@ -205,12 +201,12 @@ function setup() {
   score.scale = 0.5;
   score.visible = false;
 
-  winText = createSprite(600,150);
+  winText = createSprite(windowWidth/2, windowHeight/2);
   winText.addImage(winText_img);
   winText.scale = 0.55;
   winText.visible = false;
    
-  loseText = createSprite(600,150);
+  loseText = createSprite(windowWidth/2, windowHeight/2);
   loseText.addImage(loseText_img);
   loseText.scale = 0.55;
   loseText.visible = false;
@@ -222,8 +218,6 @@ function setup() {
 }
 
 function draw(){
-//  StartIntroSong();
-
 
   background(tempbg);
 
@@ -324,28 +318,29 @@ function draw(){
       plasticWasteGroup.get(i).destroy();
       scoreText = scoreText + 5;           
     }
+    if(diver.isTouching(fishGroup.get(i))){
+      fishGroup.get(i).destroy();
+     touchedFish = touchedFish + 3;
+    }
+    if(touchedFish === 3){
+      life1.destroy();
+    }
+    if(touchedFish === 6){
+      life2.destroy();
+    }
+    if(touchedFish === 9){
+      life3.destroy();
+    }
+    if(touchedFish === 12){
+      life4.destroy();
+    }
+    if(touchedFish === 15){
+      life5.destroy();
+      gameState = 'END';
+    }
+    
    }//for loop ends here and bombing the plastics too
 
-   if(diver.isTouching(fishGroup.get(i))){
-     fishGroup.get(i).destroy();
-    touchedFish = touchedFish + 3;
-   }
-   if(touchedFish === 3){
-     life1.destroy()
-   }
-   if(touchedFish === 6){
-     life2.destroy()
-   }
-   if(touchedFish === 9){
-     life3.destroy();
-   }
-   if(touchedFish === 12){
-     life4.destroy();
-   }
-   if(touchedFish === 15){
-     life5.destroy();
-     gameState = 'END';
-   }
    
    //gameStates start
 
@@ -390,6 +385,7 @@ if(gameState === "END"){
   fishGroup.destroyEach();
   diver.visible = false;
   score.visible = false;
+  loseText.visible = true;
 }
 
 
@@ -450,11 +446,11 @@ function spawnPlasticWaste(){
     var plasticwaste = createSprite(random(320,480), random(-5,-15));
     switch(rand){
       case 1: plasticwaste.addImage(plasticBags_img);
-     plasticwaste.scale = 0.03
+     plasticwaste.scale = 0.03;
       break;
 
       case 2: plasticwaste.addImage(plasticBottles_img);
-      plasticwaste.scale = 0.1
+      plasticwaste.scale = 0.1;
       break;
 
       default:
@@ -470,11 +466,11 @@ function spawnPlasticWaste(){
     var plasticwaste = createSprite(random(480,640), random(-5,-15));
     switch(rand){
       case 1: plasticwaste.addImage(plasticBags_img);
-     plasticwaste.scale = 0.03
+     plasticwaste.scale = 0.03;
       break;
 
       case 2: plasticwaste.addImage(plasticBottles_img);
-      plasticwaste.scale = 0.1
+      plasticwaste.scale = 0.1;
       break;
 
       default:
@@ -490,11 +486,11 @@ function spawnPlasticWaste(){
     var plasticwaste = createSprite(random(680,800), random(-5,-15));
     switch(rand){
       case 1: plasticwaste.addImage(plasticBags_img);
-     plasticwaste.scale = 0.03
+     plasticwaste.scale = 0.03;
       break;
 
       case 2: plasticwaste.addImage(plasticBottles_img);
-      plasticwaste.scale = 0.1
+      plasticwaste.scale = 0.1;
       break;
 
       default:

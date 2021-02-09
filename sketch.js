@@ -6,6 +6,8 @@ var plasticCan, plasticCan_img;
 var plasticwaste;
 var plasticWasteGroup;
 
+var turtlesSaved = 0;
+
 var bomb, bomb_img;
 var bombSound;
 
@@ -57,8 +59,23 @@ var jelly2, jelly2_img;
 var urchin, urchin_img;
 
 var shark, shark_img;
+var playAgain, playAgain_img;
 
 var touchedFish = 0;
+
+var  LoseSound;
+
+var nxtlevelbtn, nxtlevelbtn_img;
+
+var MarineNinjaLogo, MarineNinjaLogo_img;
+
+var bag, bag_img;
+var can,can_img;
+var canWithStraw, cupWithStraw_img;
+
+var turtle1, turtle1_img;
+var net, net_img;
+
 
 function preload(){
   bg = loadImage('images/THEFINALIMGBG.png');
@@ -74,8 +91,8 @@ function preload(){
 
   marineNinja_img = loadImage('images/MARINENINJALOGO.png');
 
-  howToPlay_img = loadImage('images/HOWTOPLAYLVL1FINAL.png');
-  instructions_img = loadImage('images/Level3Instructions.png');
+  howToPlay_img = loadImage('images/HowToPlayTitle.png');
+  instructions_img = loadImage('images/Level3InstructionsTest1.png');
 
   diver_img = loadAnimation('images/diverImg1.png','images/diverImg2.png','images/DiverImg3.png','images/DiverImg4.png','images/DiverImg5.png','images/DiverImg6.png','images/DiverImg7.png','images/DiverImg8.png')
   staticDiver_img = loadImage('images/DiverImg4.png');
@@ -83,11 +100,13 @@ function preload(){
   flippedDiver_img = loadAnimation('images/flippedDiver1.png','images/flippedDiver2.png','images/flippedDiver3.png','images/flippedDiver4.png','images/flippedDiver5.png','images/flippedDiver6.png','images/flippedDiver7.png','images/flippedDiver8.png');
   flippedDiverStatic = loadImage('images/flippedDiver1.png');
 
-  life1_img = loadImage('images/fish1.png');
-  life2_img = loadImage('images/fish2.png');
-  life3_img = loadImage('images/fish3.png');
-  life4_img = loadImage('images/fish4.png');
-  life5_img = loadImage('images/fish5.png');
+  life1_img = loadImage('images/LifeLine.png');
+  life2_img = loadImage('images/LifeLine.png');
+  life3_img = loadImage('images/LifeLine.png');
+  life4_img = loadImage('images/LifeLine.png');
+  life5_img = loadImage('images/LifeLine.png');
+
+  net_img = loadImage('images/FISHNET.png');
 
   bomb_img = loadImage('images/bomb.png'); 
   bombSound = loadSound('Sounds/Bomb.wav');
@@ -95,17 +114,18 @@ function preload(){
   octopus_img = loadImage('images/Octopus.png');
   nemo_img = loadImage('images/clownfish.png');
 
-  playButton_img = loadImage('images/PLAYBUTTON.png');
+  playButton_img = loadImage('images/PlayButton.png');
 
   angelFish_img = loadImage('images/angelfish.png');
 
   winText_img = loadImage('images/Level3Win.png');
   loseText_img = loadImage('images/Level3Lose.png');
 
-  tempbg = loadImage('images/IntroBackgroundTemp.jpg');
+  tempbg = loadImage('images/haha.jpg');
 
   gameSound = loadSound('Sounds/gameSoundTrial.mp3');
   winSound = loadSound('Sounds/Win.mp3');
+  LoseSound = loadSound('Sounds/Fail.mp3');
 
   jelly1_img = loadImage('images/jellyfish1.png');
   jelly2_img = loadImage('images/jellyfish2.png');
@@ -113,6 +133,19 @@ function preload(){
   shark_img = loadImage('images/Shark1.png');
 
   urchin_img = loadImage('images/Urchin.png');
+
+  playAgain_img = loadImage('images/PlayAgain.png');
+
+  nxtlevelbtn_img = loadImage('images/Level3Btn.png');
+    
+  MarineNinjaLogo_img = loadImage('images/Logo.png');
+
+  bag_img = loadImage('images/Bag_latest.png');
+  can_img = loadImage('images/Can_latest.png');
+
+  cupWithStraw_img = loadImage('images/cupWithstraw_latest.png');
+
+  turtle1_img = loadImage('images/turtleMain.png');
  
 
 }
@@ -128,33 +161,50 @@ function setup() {
    octopus.visible = false; 
   
 
-   diver = createSprite(80,150);
-   diver.addAnimation("diversfirstimg",staticDiver_img);
-   diver.scale = 0.25;
+   //diver = createSprite(80,150);
+diver = createSprite(0.1*windowWidth,0.2*windowHeight);
+diver.addAnimation("diversfirstimg",staticDiver_img);
+diver.scale = 0.25;
 
-   life1 = createSprite(1105,50);
-   life1.addImage(life1_img);
-   life1.scale = 0.5;
+//life1 = createSprite(1105,50);
+life1 = createSprite(0.95*windowWidth,0.06*windowHeight);
+life1.addImage(life1_img);
+life1.scale = 0.5;
 
-   life2 = createSprite(1040,50);
-   life2.addImage(life2_img);
-   life2.scale = 0.5;
+//life2 = createSprite(1040,50);
+life2 = createSprite(0.95*windowWidth,0.16*windowHeight)
+life2.addImage(life2_img);
+life2.scale = 0.5;
 
-   life3 = createSprite(975,50);
-   life3.addImage(life3_img);
-   life3.scale = 0.5;
 
-   life4 = createSprite(910,50);
-   life4.addImage(life4_img);
-   life4.scale =0.5;
+//life3 = createSprite(975,50);
+life3 = createSprite(0.95*windowWidth,0.26*windowHeight)
+life3.addImage(life3_img);
+life3.scale = 0.5;
 
-   life5 = createSprite(845,50);
+//life4 = createSprite(910,50);
+life4 = createSprite(0.95*windowWidth,0.36*windowHeight)
+life4.addImage(life4_img);
+life4.scale =0.5;
+
+   //life5 = createSprite(845,50);
+   life5 = createSprite(0.95*windowWidth,0.46*windowHeight)
    life5.addImage(life5_img)
    life5.scale = 0.5;
 
+   net = createSprite(1065,0);
+   net.addImage(net_img);
+   net.scale = 0.75;
+   net.visible = false;
+
    diver.addAnimation("diverMoving",diver_img);
    diver.addAnimation("flippedDiver",flippedDiver_img);
-   diver.addAnimation("flippedDiverInStatic",flippedDiverStatic)
+   diver.addAnimation("flippedDiverInStatic",flippedDiverStatic);
+
+   playAgain = createSprite(1545,438);
+   playAgain.addImage(playAgain_img);
+   playAgain.scale = 0.75;
+   playAgain.visible = false;
 
    plasticWasteGroup = new Group();
    fishGroup = new Group();
@@ -166,35 +216,41 @@ function setup() {
   //introBg.scale = 0.075
   introBg.visible = false;
 
+  turtle1 = createSprite(1756,414);
+  turtle1.addImage(turtle1_img);
+  turtle1.scale = 0.25;
+  turtle1.visible = false;
+
   marineNinja = createSprite(950,370);
   marineNinja.addImage(marineNinja_img);
   marineNinja.scale = 0.75;
   marineNinja.visible = false;
 
-  howToPlay = createSprite(1000,155);
+  howToPlay = createSprite(windowWidth/2,100);
   howToPlay.addImage(howToPlay_img);
-  howToPlay.scale = 0.5;
+  howToPlay.scale = 0.85;
   howToPlay.visible = false;
 
-  instructions = createSprite(1400,385);
+  instructions = createSprite(windowWidth/2, 500);
   instructions.addImage(instructions_img);
   instructions.scale = 1.25;
   instructions.visible = false;
 
-  playButton = createSprite(700,350);
+
+  playButton = createSprite(0.55*windowWidth,windowHeight/2);
   playButton.addImage(playButton_img);
   playButton.scale = 0.75;
-  playButton.visible = false;   
+  playButton.visible = false;
   
   BookInstructionButton = createSprite(1400,350);
   BookInstructionButton.addImage(BookInstructionButton_img);
   BookInstructionButton.scale = 0.5;
   BookInstructionButton.visible = false;
   
-  playText = createSprite(660,415);
-  playText.addImage(playText_img);
-  playText.scale = 0.5;
-  playText.visible = false;
+  //playText = createSprite(660,415);
+  //playText.addImage(playText_img);
+ // playText.scale = 0.5;
+ // playText.visible = false;
 
   score = createSprite(150,100);
   score.addImage(score_img);
@@ -211,6 +267,13 @@ function setup() {
   loseText.scale = 0.55;
   loseText.visible = false;
 
+ nxtlevelbtn = createSprite(1403,344);
+ nxtlevelbtn.addImage(nxtlevelbtn_img);
+ nxtlevelbtn.visible = false;
+
+ MarineNinjaLogo = createSprite(112,115);
+ MarineNinjaLogo.addImage(MarineNinjaLogo_img);
+ MarineNinjaLogo.scale = 0.17;
 
   gameSound.loop();
   gameSound.play();
@@ -222,6 +285,9 @@ function draw(){
   background(tempbg);
 
   if(gameState === "play"){
+
+  MarineNinjaLogo.x = 0.915*windowWidth;
+  MarineNinjaLogo.y = windowHeight/1.25;
   
   if(frameCount > 100){
     spawnPlasticWaste();
@@ -234,7 +300,7 @@ function draw(){
    playButton.visible = false;
    BookInstructionButton.visible = false;
 
-   playText.visible = false;
+  // playText.visible = false;
    score.visible = true;
    instructions.visible = false;
 
@@ -341,7 +407,50 @@ function draw(){
     
    }//for loop ends here and bombing the plastics too
 
-   
+   turtle1.visible = true;
+    turtle1.velocityX = -5;
+
+    net.visible = true
+    net.velocityY = 2;
+
+    if( turtlesSaved === 0 && net.y >= 310 ){
+      net.velocityY = 2;
+      turtle1.velocityX = 0;
+      turtle1.velocityY = 2;
+      
+      if(turtle1.y >= 770){
+        net.velocityY = 0;
+        turtle1.velocityY = 0;
+
+        if(mousePressedOver(net)){
+          net.x = 10000; 
+          net.velocityY = 0;
+           
+          turtlesSaved = 1;   
+          scoreText = scoreText + 100;       
+          
+      }
+      
+      }
+    }
+    if(turtlesSaved === 1){
+      turtle1.velocityX = -5;
+       turtle1.velocityY = -3;
+      
+    }    
+    if(turtlesSaved === 1 && frameCount % 500 === 0){
+      turtlesSaved = 0;
+      net.x = 1065;
+      net.y = 0;
+      turtle1.x = 1756;
+      turtle1.y = 414;
+      turtle1.velocityX = -5;
+      turtle1.velocityY = 0;
+    }
+    if(scoreText >= 200){
+      turtlesSaved = 2;
+    }
+
    //gameStates start
 
    if(gameState === "play"){
@@ -351,6 +460,8 @@ function draw(){
     fill("white");
     textSize(50);
     text(scoreText,217,80);
+    net.visible = true;
+     turtle1.visible = true;
 
     life1.visible = true;
     life2.visible = true;
@@ -367,10 +478,8 @@ function draw(){
    }
    
 if(gameState === "WIN"){
-  button = createButton('LEVEL 4');
-    button.position(300,300);
-    button.mousePressed(greet);  
-  
+ 
+ greet();   
   plasticWasteGroup.destroyEach();
   fishGroup.destroyEach();
   diver.visible = false;
@@ -381,11 +490,21 @@ if(gameState === "WIN"){
 }
 //lose
 if(gameState === "END"){
+
+  playAgain.visible = true;
   plasticWasteGroup.destroyEach();
   fishGroup.destroyEach();
   diver.visible = false;
   score.visible = false;
   loseText.visible = true;
+
+  LoseSound.play();
+
+  noLoop();
+
+  if(mousePressedOver(playAgain)){
+    retry();
+  }
 }
 
 
@@ -395,25 +514,35 @@ if(gameState === "END"){
     howToPlay.visible = true;
    BookInstructionButton.visible = true;
    playButton.visible = true;
-   playText.visible = true;
+  // playText.visible = true;
      playButton.x = 550;
-     playText.x = 510;
+    // playText.x = 510;
      BookInstructionButton.visible = false;
      instructions.visible = true;
+
+     life1.visible = false;
+     life2.visible = false;
+     life3.visible = false;
+     life4.visible = false;
+     life5.visible = false;
+
+     net.visible = false;
+     turtle1.visible = false;
+
     
 
     if(mousePressedOver(playButton)){
       gameState = "play";
       playButton.visible = false;
-      playText.visible = false;
+   //   playText.visible = false;
       introBg.visible = false;
       diver.visible = true;
     }
     
       
     }
-    fill("white");
-    text(mouseX + ":" + mouseY, 600,150);
+   // fill("white");
+ //   text(mouseX + ":" + mouseY, 600,150);
     drawSprites();
 
     
@@ -421,92 +550,133 @@ if(gameState === "END"){
   
 //spawning plastics
 function spawnPlasticWaste(){
-  if(frameCount % 50 === 0 && diver.x <= 160){
-    var rand = Math.round(random(1,2));
-    var plasticwaste = createSprite(random(320,520), random(-5,-15));
-    switch(rand){
-      case 1: plasticwaste.addImage(plasticBags_img);
-     plasticwaste.scale = 0.03
-      break;
-
-      case 2: plasticwaste.addImage(plasticBottles_img);
-      plasticwaste.scale = 0.1
-      break;
-
-      default:
+  /*
+    if(frameCount % 50 === 0 && diver.x <= 160){
+      var rand = Math.round(random(1,2));
+      //var plasticwaste = createSprite(random(320,520), random(-5,-15));
+      var plasticwaste = createSprite(random(0.2*windowWidth, 0.9*windowWidth), random(-5,-15));
+  
+      switch(rand){
+        case 1: plasticwaste.addImage(plasticBags_img);
+       plasticwaste.scale = 0.03
         break;
-      
-    }
-    plasticWasteGroup.add(plasticwaste);
-    plasticwaste.velocityY = 1 + scoreText/25; 
-  }
-
-  if(frameCount % 40 === 0 && diver.x > 200 && diver.x < 320 ){
-    var rand = Math.round(random(1,2));
-    var plasticwaste = createSprite(random(320,480), random(-5,-15));
-    switch(rand){
-      case 1: plasticwaste.addImage(plasticBags_img);
-     plasticwaste.scale = 0.03;
-      break;
-
-      case 2: plasticwaste.addImage(plasticBottles_img);
-      plasticwaste.scale = 0.1;
-      break;
-
-      default:
+  
+        case 2: plasticwaste.addImage(plasticBottles_img);
+        plasticwaste.scale = 0.1
         break;
-      
+  
+        default:
+          break;
+        
+      }
+      plasticWasteGroup.add(plasticwaste);
+      plasticwaste.velocityY = 1 + scoreText/25; 
     }
-    plasticWasteGroup.add(plasticwaste);
-    plasticwaste.velocityY = 1 + scoreText/25; 
+    */
+  
+    if(frameCount % 10 === 0){
+      if(frameCount % 30 === 0){
+        var rand = Math.round(random(1,5));
+        //var plasticwaste = createSprite(random(320,520), random(-5,-15));
+        var plasticwaste = createSprite(random(0.2*windowWidth, 0.9*windowWidth), random(-5,-15));
     
-  }
-  if(frameCount % 40 === 0 && diver.x > 320 && diver.x < 480 ){
-    var rand = Math.round(random(1,2));
-    var plasticwaste = createSprite(random(480,640), random(-5,-15));
-    switch(rand){
-      case 1: plasticwaste.addImage(plasticBags_img);
-     plasticwaste.scale = 0.03;
-      break;
+        switch(rand){
+          case 1: plasticwaste.addImage(plasticBags_img);
+         plasticwaste.scale = 0.03;
+          break;
+    
+          case 2: plasticwaste.addImage(plasticBottles_img);
+          plasticwaste.scale = 0.1;
+          break;
 
-      case 2: plasticwaste.addImage(plasticBottles_img);
-      plasticwaste.scale = 0.1;
-      break;
+          case 3: plasticwaste.addImage(bag_img);
+          plasticwaste.scale = 1.25;
+          break;
 
-      default:
+          case 4: plasticwaste.addImage(can_img);
+          plasticwaste.scale = 1.25;
+          break;
+
+          case 5: plasticwaste.addImage(cupWithStraw_img);
+          plasticwaste.scale = 1.25;
+          break;
+    
+          default:
+            break;
+          
+        }
+        plasticWasteGroup.add(plasticwaste);
+        plasticwaste.velocityY = 1 + scoreText/25; 
+      }
+    }
+      /*
+      var rand = Math.round(random(1,2));
+      //var plasticwaste = createSprite(random(320,480), random(-5,-15));
+      var plasticwaste = createSprite(random(0.4*windowWidth,0.9*windowWidth), random(-5,-15));
+  
+      switch(rand){
+        case 1: plasticwaste.addImage(plasticBags_img);
+       plasticwaste.scale = 0.03
         break;
+  
+        case 2: plasticwaste.addImage(plasticBottles_img);
+        plasticwaste.scale = 0.1
+        break;
+  
+        default:
+          break;
+        
+      }
+      plasticWasteGroup.add(plasticwaste);
+      plasticwaste.velocityY = 2 + scoreText/25; 
       
     }
-    plasticWasteGroup.add(plasticwaste);
-    plasticwaste.velocityY = 1 + scoreText/25; 
-    
-  }
-  if(frameCount % 40 === 0 && diver.x > 640 && diver.x < 800 ){
-    var rand = Math.round(random(1,2));
-    var plasticwaste = createSprite(random(680,800), random(-5,-15));
-    switch(rand){
-      case 1: plasticwaste.addImage(plasticBags_img);
-     plasticwaste.scale = 0.03;
-      break;
-
-      case 2: plasticwaste.addImage(plasticBottles_img);
-      plasticwaste.scale = 0.1;
-      break;
-
-      default:
+    if(frameCount % 40 === 0 && diver.x > 320 && diver.x < 480 ){
+      var rand = Math.round(random(1,2));
+      var plasticwaste = createSprite(random(0.5*windowWidth, 0.9*windowHeight), random(-5,-15));
+      switch(rand){
+        case 1: plasticwaste.addImage(plasticBags_img);
+       plasticwaste.scale = 0.03
         break;
+  
+        case 2: plasticwaste.addImage(plasticBottles_img);
+        plasticwaste.scale = 0.1
+        break;
+  
+        default:
+          break;
+        
+      }
+      plasticWasteGroup.add(plasticwaste);
+      plasticwaste.velocityY = 2 + scoreText/25; 
       
     }
-    plasticWasteGroup.add(plasticwaste);
-    plasticwaste.velocityY = 1 + scoreText/25; 
-    
-  }
-
-}
-//spawning fish
+    if(frameCount % 40 === 0 && diver.x > 640 && diver.x < 800 ){
+      var rand = Math.round(random(1,2));
+      var plasticwaste = createSprite(random(0.3*windowWidth, 0.9*windowHeight), random(-5,-15));
+      switch(rand){
+        case 1: plasticwaste.addImage(plasticBags_img);
+       plasticwaste.scale = 0.03
+        break;
+  
+        case 2: plasticwaste.addImage(plasticBottles_img);
+        plasticwaste.scale = 0.1
+        break;
+  
+        default:
+          break;
+        
+      }
+      plasticWasteGroup.add(plasticwaste);
+      plasticwaste.velocityY = 2 + scoreText/25; 
+      
+    }
+    */
+  
+  }//spawning fish
 function spawnFish(){
 if(frameCount % 100 === 0){
-  var rand = Math.round(random(1,6));
+  var rand = Math.round(random(1,5));
 var fish = createSprite(random(1830,1700),random(100,450));
 
   switch(rand){
@@ -578,6 +748,10 @@ var fish = createSprite(random(1830,1700),random(100,450));
 }
 
 function greet() {
-  window.location.href = 'https://editor.p5js.org/ParnaMehta/present/kIA0MkLuu';
+  window.location.href = 'https://theinevitable007.github.io/MNWin/';
+}
+function retry() {
+  
+  document.location.reload(true);  
 }
 

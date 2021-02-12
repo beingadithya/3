@@ -479,12 +479,19 @@ function draw(){
    
 if(gameState === "WIN"){
  
- greet();   
+ //greet();   
   plasticWasteGroup.destroyEach();
   fishGroup.destroyEach();
   diver.visible = false;
-  winSound.play();
-  noLoop();
+ // winSound.play();
+
+ play = true;
+  playSound();
+
+  greet();
+ 
+
+  //noLoop();
   //gameSound.pause();
 
 }
@@ -498,13 +505,17 @@ if(gameState === "END"){
   score.visible = false;
   loseText.visible = true;
 
-  LoseSound.play();
-
-  noLoop();
+  play = true;
+  playSoundWhenLost();
 
   if(mousePressedOver(playAgain)){
     retry();
-  }
+   }
+
+  //LoseSound.play();
+
+  //noLoop();
+
 }
 
 
@@ -748,7 +759,7 @@ var fish = createSprite(random(1830,1700),random(100,450));
 }
 
 function greet() {
-  window.location.href = 'https://theinevitable007.github.io/MNWin/';
+  window.location.href = 'https://theinevitable007.github.io/win/';
 }
 function retry() {
   

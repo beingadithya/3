@@ -759,7 +759,7 @@ var fish = createSprite(random(1830,1700),random(100,450));
 }
 
 function greet() {
-  window.location.href = 'https://beingadithya.github.io/MarineNinjaTestWinVid/';
+  window.location.href = 'https://beingadithya.github.io/win/';
 }
 function retry() {
   
